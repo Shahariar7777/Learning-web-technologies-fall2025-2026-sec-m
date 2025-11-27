@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <title>Date od Birth</title>
+</head>
+<h3>4. Date of Birth Validation</h3>
+<form name="dobForm" onsubmit="return validateDOB()">
+    <label>Date of Birth:</label>
+    <input type="text" id="dd" name="dd" placeholder="dd" maxlength="2" size="2">
+    <input type="text" id="mm" name="mm" placeholder="mm" maxlength="2" size="2">
+    <input type="text" id="yyyy" name="yyyy" placeholder="yyyy" maxlength="4" size="4">
+    <span id="dobError" style="color: red;"></span>
+    <input type="submit" value="Submit">
+</form>
+
+</html>
+
+
+<script>
+    function validateDOB() {
+        let ddStr = document.getElementById('dd').value.trim();
+        let mmStr = document.getElementById('mm').value.trim();
+        let yyyyStr = document.getElementById('yyyy').value.trim();
+        document.getElementById('dobError').textContent = '';
+
+        // i. Cannot be empty
+        if (ddStr.length === 0 || mmStr.length === 0 || yyyyStr.length === 0) {
+            document.getElementById('dobError').textContent = 'Date fields cannot be empty.';
+            return false;
+        }
+
+        let day = parseInt(ddStr);
+        let month = parseInt(mmStr);
+        let year = parseInt(yyyyStr);
+
+        if (isNaN(day) || isNaN(month) || isNaN(year)) {
+            document.getElementById('dobError').textContent = 'All fields must be valid numbers.';
+            return false;
+        }
+
+        // ii. Must be a valid number (range check)
+        if (day < 1 || day > 31) {
+            document.getElementById('dobError').textContent = 'Day (dd) must be 01-31.';
+            return false;
+        }
+        if (month < 1 || month > 12) {
+            document.getElementById('dobError').textContent = 'Month (mm) must be 01-12.';
+            return false;
+        }
+        if (year < 1900 || year > 2016) {
+            document.getElementById('dobError').textContent = 'Year (yyyy) must be 1900-2016.';
+            return false;
+        }
+
+        // Check for actual date validity (e.g., prevents Feb 30th)
+        let date = new Date(year, month - 1, day);
+        if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+            document.getElementById('dobError').textContent = 'Invalid date.';
+            return false;
+        }
+
+        alert("Date of Birth is Valid!");
+        return true;
+    }
+</script>

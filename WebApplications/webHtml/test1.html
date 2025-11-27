@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Email Validation Lab</title>
+</head>
+
+<body>
+    <h2>2. Email Validation</h2>
+    <p>Rules: Cannot be empty; Must be a valid email (e.g., sample@example.com).</p>
+
+    <form name="emailForm" onsubmit="return validateEmail()">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <span id="emailError" style="color: red;"></span>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function validateEmail() {
+
+            let emailInput = document.getElementById('email').value;
+            let email = emailInput.trim();
+            document.getElementById('emailError').textContent = '';
+
+
+            if (email.length === 0) {
+                document.getElementById('emailError').textContent = 'Email cannot be empty.';
+                return false;
+            }
+
+            let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Must be a valid email address (e.g., sample@example.com).';
+                return false;
+            }
+
+
+            alert("Email is valid!");
+            return true; 
+    </script>
+</body>
+
+</html>
